@@ -24,12 +24,16 @@ public class MenuUIActions : MonoBehaviour
 
     public void ShowHideLastBestScore()
     {
-        string lastBestScore = DataHolder.Instance.GetLastBestScore();
-        if(string.IsNullOrEmpty(lastBestScore))
+        int lastBestScore = DataHolder.Instance.GetLastBestScore();
+        if (lastBestScore == 0)
         {
-            lastBestScore = "No scores saved.";
+            LastBestScore.text = "No scores saved";
         }
-        LastBestScore.text = lastBestScore;
+        else
+        {
+            string lastBestScoreUserName = DataHolder.Instance.GetLastBestScoreUserName();
+            LastBestScore.text = $"Best score : {lastBestScoreUserName} : {lastBestScore}";
+        }
         LastBestScore.gameObject.SetActive(!LastBestScore.gameObject.activeSelf);
     }
 }

@@ -7,7 +7,8 @@ public class DataHolder : MonoBehaviour
     public static DataHolder Instance;
 
     private string userName;
-    private string lastBestScore;
+    private string lastBestScoreUserName;
+    private int lastBestScore;
 
     private void Awake()
     {
@@ -27,19 +28,22 @@ public class DataHolder : MonoBehaviour
         Instance.userName = name;
     }
 
-    public void StoreLastBestScore(string bestScore)
+    public void StoreLastBestScore(int bestScore, string userName)
     {
         Instance.lastBestScore = bestScore;
+        Instance.lastBestScoreUserName = userName;
     }
 
     public string GetUserName() => userName;
-    public string GetLastBestScore() => lastBestScore;
+    public int GetLastBestScore() => lastBestScore;
+    public string GetLastBestScoreUserName() => lastBestScoreUserName;
 
     [Serializable]
     class SaveData
     {
         public string UserName;
-        public string LastBestScore;
+        public int LastBestScore;
+        public string LastBestScoreUserName;
     }
 
     public void SaveDataToStorage()
@@ -47,6 +51,7 @@ public class DataHolder : MonoBehaviour
         SaveData data = new SaveData();
         data.UserName = userName;
         data.LastBestScore = lastBestScore;
+        data.LastBestScoreUserName = lastBestScoreUserName;
 
         string json = JsonUtility.ToJson(data);
 
@@ -63,6 +68,7 @@ public class DataHolder : MonoBehaviour
 
             userName = data.UserName;
             lastBestScore = data.LastBestScore;
+            lastBestScoreUserName = data.LastBestScoreUserName;
         }
     }
 }
